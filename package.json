@@ -1,7 +1,7 @@
 {
     "name": "fifa.api",
     "version": "1.0.0",
-    "description": "API Rest",
+    "description": "FIFA API Rest",
     "main": "index.js",
     "scripts": {
         "start": "nodemon index.js",
