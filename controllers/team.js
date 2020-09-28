@@ -7,7 +7,7 @@ var path = require('path');
 //modelos
 var User = require('../models/user');
 var Team = require('../models/team');
-
+var UserController = require('./user');
 // libs
 var jwt = require('../services/jwt');
 
@@ -23,6 +23,16 @@ function pruebas(req, res) {
 function saveTeam(req, res) {
     var team = new Team();
     var params = req.body;
+    var user = req.params.user;
+    var token = req.params.token
+
+    if (user != UserController.getActiveUser) {
+        res.status(404).send({ message: 'different user' });
+    }
+
+    if (token != UserController.getActiveToken) {
+        res.status(404).send({ message: 'token expired' });
+    }
 
     if (params.name) {
         team.name = params.name;

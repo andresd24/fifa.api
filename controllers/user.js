@@ -47,6 +47,7 @@ function saveUser(req, res) {
                                     res.status(404).send({ message: 'User could not be saved' });
                                 } else {
                                     res.status(200).send({ user: userStored });
+                                    res.end();
                                 }
                             }
 
@@ -104,14 +105,18 @@ function login(req, res) {
 //update user
 function updateUser(req, res) {
     var userId = req.params.id;
-    var update = req.body;
-    delete update.password;
+    var user = JSON.stringify(req.body);
+    delete user.password;
 
-    if (userId != req.user.sub) {
+    console.log(userId);
+    console.log(req._id)
+    console.log(req.body._id)
+
+    if (userId != req.body._id) {
         return res.status(500).send({ message: 'you lack permissions to update this user' });
     }
 
-    User.findByIdAndUpdate(userId, update, { new: true }, (err, userUpdated) => {
+    User.findByIdAndUpdate(userId, req.body, { new: true }, (err, userUpdated) => {
         if (err) {
             res.status(500).send({ message: 'error updating user' });
         } else {
