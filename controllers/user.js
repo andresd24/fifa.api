@@ -67,7 +67,7 @@ function saveUser(req, res) {
 // login
 function login(req, res) {
     var params = req.body;
-    var email = params.username;
+    var email = params.email;
     var password = params.password;
 
 
